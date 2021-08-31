@@ -1,8 +1,8 @@
 import collections
 
-from nextcord.ext.ipc.client import Client
-from nextcord.ext.ipc.server import Server
-from nextcord.ext.ipc.errors import *
+from ....nextcord.ext.ipc.client import Client
+from ....nextcord.ext.ipc.server import Server
+from ....nextcord.ext.ipc.errors import *
 
 
 _VersionInfo = collections.namedtuple("_VersionInfo", "major minor micro release serial")
