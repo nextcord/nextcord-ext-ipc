@@ -1,7 +1,7 @@
 import logging
 
 import aiohttp.web
-from discord.ext.ipc.errors import *
+from ....nextcord.ext.ipc.errors import *
 
 log = logging.getLogger(__name__)
 
@@ -196,7 +196,7 @@ class Server:
                 ):
                     error_response = (
                         "IPC route returned values which are not able to be sent over sockets."
-                        " If you are trying to send a discord.py object,"
+                        " If you are trying to send a nextcord.py object,"
                         " please only send the data you need."
                     )
                     log.error(error_response)

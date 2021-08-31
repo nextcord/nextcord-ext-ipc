@@ -1,5 +1,5 @@
-import discord
-from discord.ext import commands, ipc
+import nextcord
+from nextcord.ext import commands, ipc
 
 
 class MyBot(commands.Bot):
@@ -21,7 +21,7 @@ class MyBot(commands.Bot):
         print(endpoint, "raised", error)
 
 
-my_bot = MyBot(command_prefix="!", intents=discord.Intents.all())
+my_bot = MyBot(command_prefix="!", intents=nextcord.Intents.all())
 
 
 @my_bot.ipc.route()

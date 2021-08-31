@@ -1,6 +1,7 @@
 version: 2
 
 python:
+  version: "3.8"
   install:
     - method: pip
       path: .
@@ -8,4 +9,5 @@ python:
         - docs
 
 sphinx:
+  configuration: docs/conf.py
   builder: dirhtml

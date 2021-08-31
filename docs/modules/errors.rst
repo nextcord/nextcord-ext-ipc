@@ -1,7 +1,7 @@
 IPC Errors
 ==========
 
-.. currentmodule:: discord.ext.ipc.errors
+.. currentmodule:: nextcord.ext.ipc.errors
 
 .. autoclass:: IPCError
 

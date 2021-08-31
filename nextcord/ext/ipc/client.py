@@ -1,9 +1,8 @@
 import asyncio
 import logging
-import typing
 
 import aiohttp
-from discord.ext.ipc.errors import *
+from ....nextcord.ext.ipc.errors import *
 
 log = logging.getLogger(__name__)
 

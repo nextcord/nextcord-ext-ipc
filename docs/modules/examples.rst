@@ -1,7 +1,7 @@
 Example Usages
 ==============
 
-Here are some ways to use our package in **your own bot!** For github based examples, see `the examples directory <https://github.com/Ext-Creators/discord-ext-ipc/tree/master/examples>`_.
+Here are some ways to use our package in **your own bot!** For GitHub based examples, see `the examples directory <https://github.com/nextcord/nextcord-ext-ipc/tree/main/examples>`_.
 
 
 A basic implementation
@@ -12,8 +12,8 @@ The bot file:
 .. code-block:: python
     :linenos:
 
-    import discord
-    from discord.ext import commands, ipc
+    import nextcord
+    from nextcord.ext import commands, ipc
 
 
     class MyBot(commands.Bot):
@@ -28,14 +28,14 @@ The bot file:
 
         async def on_ipc_ready(self):
             """Called upon the IPC Server being ready"""
-            print("Ipc is ready.")
+            print("IPC is ready.")
 
         async def on_ipc_error(self, endpoint, error):
             """Called upon an error being raised within an IPC route"""
             print(endpoint, "raised", error)
 
 
-    my_bot = MyBot(command_prefix="!", intents=discord.Intents.all())
+    my_bot = MyBot(command_prefix="!", intents=nextcord.Intents.all())
 
 
     @my_bot.ipc.route()
@@ -57,7 +57,7 @@ The webserver file:
     :linenos:
 
     from quart import Quart
-    from discord.ext import ipc
+    from nextcord.ext import ipc
 
 
     app = Quart(__name__)
@@ -87,8 +87,8 @@ The bot file:
 .. code-block:: python
     :linenos:
 
-    import discord
-    from discord.ext import commands, ipc
+    import nextcord
+    from nextcord.ext import commands, ipc
 
 
     class MyBot(commands.Bot):
@@ -105,14 +105,14 @@ The bot file:
 
         async def on_ipc_ready(self):
             """Called upon the IPC Server being ready"""
-            print("Ipc is ready.")
+            print("IPC is ready.")
 
         async def on_ipc_error(self, endpoint, error):
             """Called upon an error being raised within an IPC route"""
             print(endpoint, "raised", error)
 
 
-    my_bot = MyBot(command_prefix="!", intents=discord.Intents.all())
+    my_bot = MyBot(command_prefix="!", intents=nextcord.Intents.all())
 
 
     if __name__ == "__main__":
@@ -124,7 +124,7 @@ The cog file:
 .. code-block:: python
     :linenos:
 
-    from discord.ext import commands, ipc
+    from nextcord.ext import commands, ipc
 
 
     class IpcRoutes(commands.Cog):
@@ -149,7 +149,7 @@ The webserver file:
     :linenos:
 
     from quart import Quart
-    from discord.ext import ipc
+    from nextcord.ext import ipc
 
 
     app = Quart(__name__)

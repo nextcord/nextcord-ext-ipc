@@ -1,12 +1,12 @@
 import re
 
-project = "discord-ext-ipc"
-copyright = "2020-present, Ext-Creators"
-author = "Ext-Creators"
+project = "nextcord-ext-ipc"
+copyright = "2021, Nextcord Developers"
+author = "Nextcord Developers"
 
 _version_regex = r"^version = ('|\")((?:[0-9]+\.)*[0-9]+(?:\.?([a-z]+)(?:\.?[0-9])?)?)\1$"
 
-with open("../discord/ext/ipc/__init__.py") as stream:
+with open("../nextcord/ext/ipc/__init__.py") as stream:
     match = re.search(_version_regex, stream.read(), re.MULTILINE)
 
 version = match.group(2)
@@ -44,7 +44,7 @@ autodoc_typehints = "none"
 intersphinx_mapping = {
     "aiohttp": ("https://docs.aiohttp.org/en/stable/", None),
     "python": ("https://docs.python.org/3", None),
-    "discord": ("https://discordpy.readthedocs.io/en/latest", None),
+    "nextcord": ("https://nextcord.readthedocs.io/en/latest", None),
 }
 
 highlight_language = "python3"

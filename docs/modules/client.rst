@@ -11,7 +11,7 @@ Requests are made by calling ``ipc.client.request(endpoint, **kwargs)``
 and will be sent to the server in the json format specified above.
 It will then wait for a response and return the data.
 
-.. currentmodule:: discord.ext.ipc.client
+.. currentmodule:: nextcord.ext.ipc.client
 
 .. autoclass:: Client
     :members:
