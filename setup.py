@@ -12,7 +12,6 @@ classifiers = [
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3 :: Only",
-    "Programming Language :: Python :: 3.5",
     "Programming Language :: Python :: 3.6",
     "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
@@ -83,7 +82,7 @@ setuptools.setup(
     name="nextcord-ext-ipc",
     packages=packages,
     project_urls=project_urls,
-    python_requires=">=3.5.3",
+    python_requires=">=3.6.0",
     url="https://github.com/nextcord/nextcord-ext-ipc",
     version=version,
 )

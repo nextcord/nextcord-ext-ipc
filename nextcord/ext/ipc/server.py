@@ -1,7 +1,7 @@
 import logging
 
 import aiohttp.web
-from ....nextcord.ext.ipc.errors import *
+from .errors import *
 
 log = logging.getLogger(__name__)
 
