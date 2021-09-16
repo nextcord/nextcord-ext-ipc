@@ -34,7 +34,7 @@ pip install --upgrade nextcord-ext-ipc
 ## Links 
 
 - [Documentation](https://nextcord-ext-ipc.readthedocs.io)
-- [Usage Examples](https://github.com/nextcord/nextcord-ext-ipc/tree/main/examples)
+- [Usage Examples](https://github.com/nextcord/nextcord-ext-ipc/tree/master/examples)
 - [Support Discord Server](https://discord.gg/ZebatWssCB)
 
 ## License
