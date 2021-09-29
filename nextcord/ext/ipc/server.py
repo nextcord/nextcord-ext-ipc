@@ -1,32 +1,12 @@
 import logging
 
 import aiohttp.web
+import nextcord.ext.commands
+from nextcord.ext.commands import Context, Cog
+
 from .errors import *
 
 log = logging.getLogger(__name__)
-
-
-def route(name=None):
-    """
-    Used to register a coroutine as an endpoint when you don't have
-    access to an instance of :class:`.Server`
-
-    Parameters
-    ----------
-    name: str
-        The endpoint name. If not provided the method name will be
-        used.
-    """
-
-    def decorator(func):
-        if not name:
-            Server.ROUTES[func.__name__] = func
-        else:
-            Server.ROUTES[name] = func
-
-        return func
-
-    return decorator
 
 
 class IpcServerResponse:
@@ -82,6 +62,7 @@ class Server:
         multicast_port=20000,
     ):
         self.bot = bot
+        self.bot_id = None
         self.loop = bot.loop
 
         self.secret_key = secret_key
@@ -95,33 +76,55 @@ class Server:
         self.do_multicast = do_multicast
         self.multicast_port = multicast_port
 
-        self.endpoints = {}
+        self._add_cog = bot.add_cog
+        bot.add_cog = self.add_cog
 
-    def route(self, name=None):
+        self.endpoints = {}
+        self.sorted_endpoints = {}
+
+    def update_endpoints(self):
+        """Ensures endpoints is up to date"""
+        self.endpoints = {}
+        for routes in self.sorted_endpoints.values():
+            self.endpoints = {**self.endpoints, **routes}
+
+    def add_cog(self, cog: Cog, *, override: bool = False) -> None:
+        """
+        Hooks into add_cog and allows
+        for easy route finding within classes
+        """
+        self._add_cog(cog, override=override)
+
+        method_list = [
+            getattr(cog, func)
+            for func in dir(cog)
+            if callable(getattr(cog, func)) and func.startswith("ipc_")
+        ]
+
+        # Reset endpoints for this class
+        cog_name = cog.__class__.__name__
+        self.sorted_endpoints[cog_name] = {}
+
+        for method in method_list:
+            method_name = method.__name__.lstrip("ipc_")
+            self.sorted_endpoints[cog_name][method_name] = method
+
+        self.update_endpoints()
+
+    def route(self, route_name=None):
         """Used to register a coroutine as an endpoint when you have
         access to an instance of :class:`.Server`.
-
-        Parameters
-        ----------
-        name: str
-            The endpoint name. If not provided the method name will be used.
         """
 
         def decorator(func):
-            if not name:
-                self.endpoints[func.__name__] = func
-            else:
-                self.endpoints[name] = func
+            name = route_name or func.__name__
+            self.ROUTES["main"][name] = func
+
+            self.update_endpoints()
 
             return func
 
         return decorator
-
-    def update_endpoints(self):
-        """Called internally to update the server's endpoints for cog routes."""
-        self.endpoints = {**self.endpoints, **self.ROUTES}
-
-        self.ROUTES = {}
 
     async def handle_accept(self, request):
         """Handles websocket requests from the client process.
@@ -131,34 +134,42 @@ class Server:
         request: :class:`~aiohttp.web.Request`
             The request made by the client, parsed by aiohttp.
         """
-        self.update_endpoints()
-
         log.info("Initiating IPC Server.")
+        print("Init -> " + str(self.endpoints))
 
         websocket = aiohttp.web.WebSocketResponse()
         await websocket.prepare(request)
 
         async for message in websocket:
+            print("Incoming -> " + str(self.endpoints))
             request = message.json()
 
             log.debug("IPC Server < %r", request)
 
             endpoint = request.get("endpoint")
+            print("Requested -> " + endpoint)
 
             headers = request.get("headers")
 
             if not headers or headers.get("Authorization") != self.secret_key:
-                log.info("Received unauthorized request (Invalid or no token provided).")
+                log.info(
+                    "Received unauthorized request (Invalid or no token provided)."
+                )
                 response = {"error": "Invalid or no token provided.", "code": 403}
             else:
-                if not endpoint or endpoint not in self.endpoints:
+                if (
+                    not endpoint
+                    or endpoint not in self.endpoints
+                ):
                     log.info("Received invalid request (Invalid or no endpoint given).")
                     response = {"error": "Invalid or no endpoint given.", "code": 400}
                 else:
                     server_response = IpcServerResponse(request)
                     try:
                         attempted_cls = self.bot.cogs.get(
-                            self.endpoints[endpoint].__qualname__.split(".")[0]
+                            self.endpoints[endpoint].__qualname__.split(".")[
+                                0
+                            ]
                         )
 
                         if attempted_cls:
@@ -168,9 +179,10 @@ class Server:
                     except AttributeError:
                         # Support base Client
                         arguments = (server_response,)
-
+                    print(arguments)
                     try:
-                        ret = await self.endpoints[endpoint](*arguments)
+                        #ret = await self.endpoints[endpoint](*arguments)
+                        ret = await self.endpoints[endpoint](server_response)
                         response = ret
                     except Exception as error:
                         log.error(
@@ -250,7 +262,7 @@ class Server:
 
     def start(self):
         """Starts the IPC server."""
-        self.bot.dispatch("ipc_ready")
+        # self.bot.dispatch("ipc_ready")
 
         self._server = aiohttp.web.Application()
         self._server.router.add_route("GET", "/", self.handle_accept)
@@ -259,6 +271,8 @@ class Server:
             self._multicast_server = aiohttp.web.Application()
             self._multicast_server.router.add_route("GET", "/", self.handle_multicast)
 
-            self.loop.run_until_complete(self.__start(self._multicast_server, self.multicast_port))
+            self.loop.run_until_complete(
+                self.__start(self._multicast_server, self.multicast_port)
+            )
 
         self.loop.run_until_complete(self.__start(self._server, self.port))

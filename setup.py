@@ -48,7 +48,9 @@ project_urls = {
     "Source": "https://github.com/nextcord/nextcord-ext-ipc",
 }
 
-_version_regex = r"^version = ('|\")((?:[0-9]+\.)*[0-9]+(?:\.?([a-z]+)(?:\.?[0-9])?)?)\1$"
+_version_regex = (
+    r"^version = ('|\")((?:[0-9]+\.)*[0-9]+(?:\.?([a-z]+)(?:\.?[0-9])?)?)\1$"
+)
 
 with open("nextcord/ext/ipc/__init__.py") as stream:
     match = re.search(_version_regex, stream.read(), re.MULTILINE)
@@ -59,12 +61,16 @@ if match.group(3) is not None:
     try:
         import subprocess
 
-        process = subprocess.Popen(["git", "rev-list", "--count", "HEAD"], stdout=subprocess.PIPE)
+        process = subprocess.Popen(
+            ["git", "rev-list", "--count", "HEAD"], stdout=subprocess.PIPE
+        )
         out, _ = process.communicate()
         if out:
             version += out.decode("utf-8").strip()
 
-        process = subprocess.Popen(["git", "rev-parse", "--short", "HEAD"], stdout=subprocess.PIPE)
+        process = subprocess.Popen(
+            ["git", "rev-parse", "--short", "HEAD"], stdout=subprocess.PIPE
+        )
         out, _ = process.communicate()
         if out:
             version += "+g" + out.decode("utf-8").strip()
