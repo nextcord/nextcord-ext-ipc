@@ -5,7 +5,7 @@ class IpcRoutes(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    async def ipc_member_count(self, data):
+    async def ipc_get_member_count(self, data):
         guild = self.bot.get_guild(
             data.guild_id
         )  # get the guild object using parsed guild_id

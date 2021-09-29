@@ -26,13 +26,6 @@ class MyBot(commands.Bot):
 my_bot = MyBot(command_prefix="!", intents=nextcord.Intents.all())
 
 
-@my_bot.command()
-async def r(ctx):
-    my_bot.reload_extension("cogs.ipc")
-    print(my_bot.ipc.endpoints)
-    await ctx.send("Reloaded")
-
-
 if __name__ == "__main__":
     my_bot.ipc.start()  # start the IPC Server
-    my_bot.run("NTExMzE5OTYzNTgwMTA0NzA1.W-i50w.u_aNK3gete6Xj88_XpP1Fj0HZkM")
+    my_bot.run("TOKEN")

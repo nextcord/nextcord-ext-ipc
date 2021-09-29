@@ -11,7 +11,7 @@ ipc_client = ipc.Client(
 @app.route("/")
 async def index():
     member_count = await ipc_client.request(
-        "member_count", guild_id=500525882226769931  # TODO Remove
+        "get_member_count", guild_id=12345678
     )  # get the member count of server with ID 12345678
 
     return str(member_count)  # display member count

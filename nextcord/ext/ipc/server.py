@@ -135,19 +135,16 @@ class Server:
             The request made by the client, parsed by aiohttp.
         """
         log.info("Initiating IPC Server.")
-        print("Init -> " + str(self.endpoints))
 
         websocket = aiohttp.web.WebSocketResponse()
         await websocket.prepare(request)
 
         async for message in websocket:
-            print("Incoming -> " + str(self.endpoints))
             request = message.json()
 
             log.debug("IPC Server < %r", request)
 
             endpoint = request.get("endpoint")
-            print("Requested -> " + endpoint)
 
             headers = request.get("headers")
 
@@ -157,31 +154,13 @@ class Server:
                 )
                 response = {"error": "Invalid or no token provided.", "code": 403}
             else:
-                if (
-                    not endpoint
-                    or endpoint not in self.endpoints
-                ):
+                if not endpoint or endpoint not in self.endpoints:
                     log.info("Received invalid request (Invalid or no endpoint given).")
                     response = {"error": "Invalid or no endpoint given.", "code": 400}
                 else:
                     server_response = IpcServerResponse(request)
-                    try:
-                        attempted_cls = self.bot.cogs.get(
-                            self.endpoints[endpoint].__qualname__.split(".")[
-                                0
-                            ]
-                        )
 
-                        if attempted_cls:
-                            arguments = (attempted_cls, server_response)
-                        else:
-                            arguments = (server_response,)
-                    except AttributeError:
-                        # Support base Client
-                        arguments = (server_response,)
-                    print(arguments)
                     try:
-                        #ret = await self.endpoints[endpoint](*arguments)
                         ret = await self.endpoints[endpoint](server_response)
                         response = ret
                     except Exception as error:
