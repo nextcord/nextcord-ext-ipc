@@ -134,6 +134,8 @@ class Server:
         request: :class:`~aiohttp.web.Request`
             The request made by the client, parsed by aiohttp.
         """
+        # TODO Fix / add this back
+        # self.bot.dispatch("ipc_ready")
         log.info("Initiating IPC Server.")
 
         websocket = aiohttp.web.WebSocketResponse()
