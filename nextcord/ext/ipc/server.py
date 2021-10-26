@@ -62,7 +62,6 @@ class Server:
         multicast_port=20000,
     ):
         self.bot = bot
-        self.bot_id = None
         self.loop = bot.loop
 
         self.secret_key = secret_key
@@ -118,7 +117,7 @@ class Server:
 
         def decorator(func):
             name = route_name or func.__name__
-            self.ROUTES["main"][name] = func
+            self.ROUTES["__main__"][name] = func
 
             self.update_endpoints()
 
