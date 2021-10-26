@@ -9,6 +9,29 @@ from .errors import *
 log = logging.getLogger(__name__)
 
 
+def route(name=None):
+    """
+    Used to register a coroutine as an endpoint when you don't have
+    access to an instance of :class:`.Server`
+
+    Parameters
+    ----------
+    name: str
+        The endpoint name. If not provided the method name will be
+        used.
+    """
+
+    def decorator(func):
+        if not name:
+            setattr(func, "__ipc_route__", func.__name__)
+        else:
+            setattr(func, "__ipc_route__", name)
+
+        return func
+
+    return decorator
+
+
 class IpcServerResponse:
     def __init__(self, data):
         self._json = data
@@ -97,7 +120,7 @@ class Server:
         method_list = [
             getattr(cog, func)
             for func in dir(cog)
-            if callable(getattr(cog, func)) and func.startswith("ipc_")
+            if callable(getattr(cog, func)) and getattr(func, "__ipc_route__")
         ]
 
         # Reset endpoints for this class
@@ -150,7 +173,9 @@ class Server:
             headers = request.get("headers")
 
             if not headers or headers.get("Authorization") != self.secret_key:
-                log.info("Received unauthorized request (Invalid or no token provided).")
+                log.info(
+                    "Received unauthorized request (Invalid or no token provided)."
+                )
                 response = {"error": "Invalid or no token provided.", "code": 403}
             else:
                 if not endpoint or endpoint not in self.endpoints:
@@ -249,6 +274,8 @@ class Server:
             self._multicast_server = aiohttp.web.Application()
             self._multicast_server.router.add_route("GET", "/", self.handle_multicast)
 
-            self.loop.run_until_complete(self.__start(self._multicast_server, self.multicast_port))
+            self.loop.run_until_complete(
+                self.__start(self._multicast_server, self.multicast_port)
+            )
 
         self.loop.run_until_complete(self.__start(self._server, self.port))
