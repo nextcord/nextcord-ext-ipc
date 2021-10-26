@@ -1,8 +1,7 @@
 import logging
 
 import aiohttp.web
-import nextcord.ext.commands
-from nextcord.ext.commands import Context, Cog
+from nextcord.ext.commands import Cog
 
 from .errors import *
 
@@ -73,8 +72,6 @@ class Server:
         The port to run the multicasting server on. Defaults to 20000
     """
 
-    ROUTES = {}
-
     def __init__(
         self,
         bot,
@@ -120,7 +117,7 @@ class Server:
         method_list = [
             getattr(cog, func)
             for func in dir(cog)
-            if callable(getattr(cog, func)) and getattr(func, "__ipc_route__")
+            if callable(getattr(cog, func)) and getattr(getattr(cog, func), "__ipc_route__")
         ]
 
         # Reset endpoints for this class
@@ -128,7 +125,9 @@ class Server:
         self.sorted_endpoints[cog_name] = {}
 
         for method in method_list:
-            method_name = method.__name__.lstrip("ipc_")
+            method_name = getattr(method, "__ipc_route__")
+            if cog_name not in self.sorted_endpoints:
+                self.sorted_endpoints[cog_name] = {}
             self.sorted_endpoints[cog_name][method_name] = method
 
         self.update_endpoints()
@@ -140,7 +139,11 @@ class Server:
 
         def decorator(func):
             name = route_name or func.__name__
-            self.ROUTES["__main__"][name] = func
+
+            if "__main__" not in self.sorted_endpoints:
+                self.sorted_endpoints["__main__"] = {}
+
+            self.sorted_endpoints["__main__"][name] = func
 
             self.update_endpoints()
 
