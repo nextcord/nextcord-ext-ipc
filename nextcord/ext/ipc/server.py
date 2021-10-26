@@ -55,7 +55,7 @@ class Server:
 
     Attributes
     ----------
-    bot: :class:`~discord.ext.commands.Bot`
+    bot: :class:`~nextcord.ext.commands.Bot`
         Your bot instance
     host: str
         The host to run the IPC Server on. Defaults to localhost.
