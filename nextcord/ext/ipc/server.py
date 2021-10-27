@@ -55,7 +55,7 @@ class Server:
 
     Attributes
     ----------
-    bot: :class:`~discord.ext.commands.Bot`
+    bot: :class:`~nextcord.ext.commands.Bot`
         Your bot instance
     host: str
         The host to run the IPC Server on. Defaults to localhost.
@@ -266,7 +266,8 @@ class Server:
 
     def start(self):
         """Starts the IPC server."""
-        self.bot.dispatch("ipc_ready")
+        if self.bot.is_ready():
+            self.bot.dispatch("ipc_ready")
 
         self._server = aiohttp.web.Application()
         self._server.router.add_route("GET", "/", self.handle_accept)

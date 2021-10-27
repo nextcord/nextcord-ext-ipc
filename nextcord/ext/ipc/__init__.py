@@ -7,5 +7,5 @@ from .errors import *
 
 _VersionInfo = collections.namedtuple("_VersionInfo", "major minor micro release serial")
 
-version = "1.0.0"
-version_info = _VersionInfo(1, 0, 0, "final", 0)
+version = "2.1.1"
+version_info = _VersionInfo(2, 1, 1, "final", 0)
