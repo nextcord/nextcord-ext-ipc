@@ -1,8 +1,8 @@
 import re
 
 project = "nextcord-ext-ipc"
-copyright = "2021, Nextcord Developers"
-author = "Nextcord Developers"
+copyright = "2021, nextcord"
+author = "nextcord"
 
 _version_regex = r"^version = ('|\")((?:[0-9]+\.)*[0-9]+(?:\.?([a-z]+)(?:\.?[0-9])?)?)\1$"
 
