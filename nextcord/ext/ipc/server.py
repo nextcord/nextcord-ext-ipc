@@ -117,7 +117,7 @@ class Server:
         method_list = [
             getattr(cog, func)
             for func in dir(cog)
-            if callable(getattr(cog, func)) and getattr(getattr(cog, func), "__ipc_route__")
+            if callable(getattr(cog, func)) and getattr(getattr(cog, func), "__ipc_route__", None)
         ]
 
         # Reset endpoints for this class
