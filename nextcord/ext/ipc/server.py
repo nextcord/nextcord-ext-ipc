@@ -130,6 +130,8 @@ class Server:
 
         self.update_endpoints()
 
+        log.debug("Updated routes for Cog %s", cog_name)
+
     def route(self, route_name=None):
         """Used to register a coroutine as an endpoint when you have
         access to an instance of :class:`.Server`.
@@ -145,6 +147,7 @@ class Server:
             self.sorted_endpoints["__main__"][name] = func
 
             self.update_endpoints()
+            log.debug("Added IPC route %s", name)
 
             return func
 
