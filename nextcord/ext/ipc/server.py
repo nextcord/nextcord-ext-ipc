@@ -8,23 +8,21 @@ from .errors import *
 log = logging.getLogger(__name__)
 
 
-def route(name=None):
+def route(route_name=None):
     """
     Used to register a coroutine as an endpoint when you don't have
     access to an instance of :class:`.Server`
 
     Parameters
     ----------
-    name: str
+    route_name: str
         The endpoint name. If not provided the method name will be
         used.
     """
 
     def decorator(func):
-        if not name:
-            setattr(func, "__ipc_route__", func.__name__)
-        else:
-            setattr(func, "__ipc_route__", name)
+        name = route_name or func.__name__
+        setattr(func, "__ipc_route__", name)
 
         return func
 
@@ -139,6 +137,7 @@ class Server:
 
         def decorator(func):
             name = route_name or func.__name__
+            setattr(func, "__ipc_route__", name)
 
             if "__main__" not in self.sorted_endpoints:
                 self.sorted_endpoints["__main__"] = {}
