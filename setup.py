@@ -1,6 +1,8 @@
 import re
 import setuptools
 
+with open("README.md", "r") as fh:
+    long_description = fh.read()
 
 classifiers = [
     "Development Status :: 5 - Production/Stable",
@@ -85,4 +87,5 @@ setuptools.setup(
     python_requires=">=3.6.0",
     url="https://github.com/nextcord/nextcord-ext-ipc",
     version=version,
+    long_description=long_description,
 )
