@@ -8,21 +8,21 @@ from .errors import *
 log = logging.getLogger(__name__)
 
 
-def route(route_name=None):
+def route(name=None):
     """
     Used to register a coroutine as an endpoint when you don't have
     access to an instance of :class:`.Server`
 
     Parameters
     ----------
-    route_name: str
+    name: str
         The endpoint name. If not provided the method name will be
         used.
     """
 
     def decorator(func):
-        name = route_name or func.__name__
-        setattr(func, "__ipc_route__", name)
+        route_name = name or func.__name__
+        setattr(func, "__ipc_route__", route_name)
 
         return func
 
@@ -132,22 +132,22 @@ class Server:
 
         log.debug("Updated routes for Cog %s", cog_name)
 
-    def route(self, route_name=None):
+    def route(self, name=None):
         """Used to register a coroutine as an endpoint when you have
         access to an instance of :class:`.Server`.
         """
 
         def decorator(func):
-            name = route_name or func.__name__
-            setattr(func, "__ipc_route__", name)
+            route_name = name or func.__name__
+            setattr(func, "__ipc_route__", route_name)
 
             if "__main__" not in self.sorted_endpoints:
                 self.sorted_endpoints["__main__"] = {}
 
-            self.sorted_endpoints["__main__"][name] = func
+            self.sorted_endpoints["__main__"][route_name] = func
 
             self.update_endpoints()
-            log.debug("Added IPC route %s", name)
+            log.debug("Added IPC route %s", route_name)
 
             return func
 
@@ -161,7 +161,6 @@ class Server:
         request: :class:`~aiohttp.web.Request`
             The request made by the client, parsed by aiohttp.
         """
-        self.bot.dispatch("ipc_ready")
         log.info("Initiating IPC Server.")
 
         websocket = aiohttp.web.WebSocketResponse()
@@ -267,7 +266,7 @@ class Server:
 
     def start(self):
         """Starts the IPC server."""
-        # self.bot.dispatch("ipc_ready")
+        self.bot.dispatch("ipc_ready")
 
         self._server = aiohttp.web.Application()
         self._server.router.add_route("GET", "/", self.handle_accept)
