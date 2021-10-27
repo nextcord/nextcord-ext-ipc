@@ -1,5 +1,5 @@
-Welcome to discord-ext-ipc's documentation!
-===========================================
+Welcome to nextcord-ext-ipc's documentation!
+============================================
 
 .. toctree::
    :numbered:

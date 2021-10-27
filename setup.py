@@ -78,6 +78,8 @@ setuptools.setup(
     author="Nextcord Developers",
     classifiers=classifiers,
     description="A Nextcord extension for inter-process communication.",
+    long_description=long_description,
+    long_description_content_type="text/markdown",
     extras_require=extras_require,
     install_requires=install_requires,
     license="Apache Software License",
@@ -87,5 +89,4 @@ setuptools.setup(
     python_requires=">=3.6.0",
     url="https://github.com/nextcord/nextcord-ext-ipc",
     version=version,
-    long_description=long_description,
 )
