@@ -1,15 +1,15 @@
 Welcome to nextcord-ext-ipc's documentation!
-============================================
+===========================================
 
 .. toctree::
    :numbered:
    :maxdepth: 2
    :caption: Contents:
 
-   modules/server.rst
-   modules/client.rst
-   modules/errors.rst
-   modules/examples.rst
+   ext/ipc/server.rst
+   ext/ipc/client.rst
+   ext/ipc/errors.rst
+   ext/ipc/examples.rst
 
 
 
