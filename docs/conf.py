@@ -7,7 +7,7 @@ project = "nextcord-ext-ipc"
 copyright = "2021, nextcord"
 author = "nextcord"
 
-sys.path.insert(0, os.path.abspath('..'))
+sys.path.insert(0, os.path.abspath(".."))
 
 _version_regex = r"^version = ('|\")((?:[0-9]+\.)*[0-9]+(?:\.?([a-z]+)(?:\.?[0-9])?)?)\1$"
 
