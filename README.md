@@ -1,6 +1,6 @@
 # nextcord-ext-ipc
 
-[![Discord server invite](https://discord.com/api/guilds/881118111967883295/embed.png)](https://discord.gg/ZebatWssCB)
+[![Discord server invite](https://img.shields.io/discord/881118111967883295?color=blue&label=Discord)](https://discord.gg/ZebatWssCB)
 [![PyPI version info](https://img.shields.io/pypi/v/nextcord-ext-ipc.svg)](https://pypi.python.org/pypi/nextcord-ext-ipc)
 [![Analyze Status](https://github.com/nextcord/nextcord-ext-ipc/workflows/Analyze/badge.svg?event=push)](https://github.com/nextcord/nextcord-ext-ipc/actions?query=workflow%3AAnalyze+event%3Apush)
 [![Build Status](https://github.com/nextcord/nextcord-ext-ipc/workflows/Build/badge.svg?event=push)](https://github.com/nextcord/nextcord-ext-ipc/actions?query=workflow%3ABuild+event%3Apush)
