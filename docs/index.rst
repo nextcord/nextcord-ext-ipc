@@ -1,5 +1,5 @@
 Welcome to nextcord-ext-ipc's documentation!
-===========================================
+============================================
 
 .. toctree::
    :numbered:
