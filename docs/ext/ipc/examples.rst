@@ -68,11 +68,12 @@ Your bot's webserver file
 
     @app.route("/")
     async def index():
-        member_count = await ipc_client.request(
-            "get_member_count", guild_id=12345678
-        )  # getting the member count of the guild id provided
+        # get the member count of the guild with the id 12345678
+        member_count = await ipc_client.request("get_member_count", guild_id=12345678)
 
-        return str(member_count)  # displays member count
+        # display member count
+        return str(member_count)
+
 
 
     if __name__ == "__main__":
