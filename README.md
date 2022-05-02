@@ -30,7 +30,7 @@ py -3 -m pip install -U nextcord-ext-ipc
 
 - [Documentation](https://ipc.docs.nextcord.dev/)
 - [Usage Examples](https://github.com/nextcord/nextcord-ext-ipc/tree/master/examples)
-- [Support Discord Server](https://discord.gg/ZebatWssCB)
+- [Support Discord Server](https://discord.gg/nextcord)
 
 ## License
 
