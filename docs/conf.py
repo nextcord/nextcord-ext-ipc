@@ -49,7 +49,7 @@ autodoc_typehints = "none"
 intersphinx_mapping = {
     "aiohttp": ("https://docs.aiohttp.org/en/stable/", None),
     "python": ("https://docs.python.org/3", None),
-    "nextcord": ("https://nextcord.readthedocs.io/en/latest", None),
+    "nextcord": ("https://docs.nextcord.dev/en/stable", None),
 }
 
 highlight_language = "python3"
