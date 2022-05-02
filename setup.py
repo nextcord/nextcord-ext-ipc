@@ -45,7 +45,7 @@ packages = [
 ]
 
 project_urls = {
-    "Documentation": "https://nextcord-ext-ipc.readthedocs.io",
+    "Documentation": "https://ipc.docs.nextcord.dev/",
     "Issue Tracker": "https://github.com/nextcord/nextcord-ext-ipc/issues",
     "Source": "https://github.com/nextcord/nextcord-ext-ipc",
 }
