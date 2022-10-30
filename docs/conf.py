@@ -78,6 +78,7 @@ def uncached(directory, files):
         for filename in files
     ]
 
+
 html_css_files = uncached("css", ["custom.css"])
 
 html_js_files = uncached("js", ["darkreader.min.js", "toggleDarkMode.js"])
