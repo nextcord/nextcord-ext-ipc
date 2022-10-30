@@ -39,7 +39,7 @@ extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.napoleon",
     "sphinx.ext.intersphinx",
-    "sphinx_rtd_theme",
+    "sphinx_book_theme",
     "sphinxcontrib_trio",
 ]
 
@@ -53,7 +53,31 @@ intersphinx_mapping = {
 }
 
 highlight_language = "python3"
-html_theme = "sphinx_rtd_theme"
+html_theme = "sphinx_book_theme"
 master_doc = "index"
 pygments_style = "friendly"
 source_suffix = ".rst"
+
+html_title = "nextcord-ext-ipc"
+
+html_theme_options = {
+    "repository_url": "https://github.com/nextcord/nextcord-ext-ipc",
+    "path_to_docs": "docs",
+    "use_repository_button": True,
+    "use_issues_button": True,
+    "use_edit_page_button": True,
+}
+
+html_static_path = ["_static"]
+
+
+def uncached(directory, files):
+    """Append last modified date to filenames in order to prevent caching old versions"""
+    return [
+        f'{directory}/{filename}?v={os.path.getmtime(os.path.join("_static", directory, filename))}'
+        for filename in files
+    ]
+
+html_css_files = uncached("css", ["custom.css"])
+
+html_js_files = uncached("js", ["darkreader.min.js", "toggleDarkMode.js"])
