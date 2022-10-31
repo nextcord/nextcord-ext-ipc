@@ -31,7 +31,7 @@ classifiers = [
 
 extras_require = {
     "docs": [
-        "sphinx>=5.0.0",
+        "sphinx>=4.0.0,<6.0.0",
         "sphinxcontrib_trio",
         "sphinx-book-theme==0.3.3",
     ],
