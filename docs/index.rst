@@ -1,10 +1,12 @@
 Welcome to nextcord-ext-ipc's documentation!
 ============================================
 
+Contents
+>>>>>>>>
+
 .. toctree::
    :numbered:
    :maxdepth: 2
-   :caption: Contents:
 
    ext/ipc/server.rst
    ext/ipc/client.rst
@@ -14,8 +16,7 @@ Welcome to nextcord-ext-ipc's documentation!
 
 
 Indices and tables
-==================
+>>>>>>>>>>>>>>>>>>>
 
 * :ref:`genindex`
-* :ref:`modindex`
 * :ref:`search`
