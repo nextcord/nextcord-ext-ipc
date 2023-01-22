@@ -266,8 +266,7 @@ class Server:
 
     def start(self):
         """Starts the IPC server."""
-        if self.bot.is_ready():
-            self.bot.dispatch("ipc_ready")
+        self.bot.dispatch("ipc_ready")
 
         self._server = aiohttp.web.Application()
         self._server.router.add_route("GET", "/", self.handle_accept)
